@@ -10,7 +10,7 @@ DockerイメージをAmazon ECRにプッシュ、イメージからLambda関数�
 
 ## 使い方
 * `app.py`を好きなように書き替える。
-    * ただし、`def handler(event, context):` 内にメイン処理を書いてこの関数の名前は変えない、もしくは`template.yaml`内の該当箇所も修正する
+    * ただし、`def handler(event, context):` 内にメイン処理を書いてこの関数の名前は変えない、もしくは`dockerfile`内の該当箇所も修正する
 * `template.yaml`を書き替える
     * 例えば`ScheduleExpression:`で好きな起動間隔に直す
 * `deploy_tools.ps1`を書き替える
