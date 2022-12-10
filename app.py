@@ -16,5 +16,5 @@ class bybit_data:
 
 #if __name__ == "__main__":
 def handler(event, context):
-    bdm = bybit_data_manage()
+    bdm = bybit_data()
     bdm.main()
