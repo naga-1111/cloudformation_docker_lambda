@@ -1,0 +1,64 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: 'Scheduled Lambda Sample'
+Parameters:
+  EcrImageUri:
+    Description: ECRuri
+    Type: String
+Resources:
+  ScheduledRule:
+    Type: AWS::Events::Rule
+    Properties:
+      Description: ScheduledRule
+      ScheduleExpression: 'cron(*/5 * * * ? *)'
+      State: ENABLED
+      Targets:
+      - Arn: !GetAtt 'LambdaFunction.Arn'
+        Id: TargetFunctionV1
+  PermissionForEventsToInvokeLambda:
+    Type: AWS::Lambda::Permission
+    Properties:
+      FunctionName: !Ref 'LambdaFunction'
+      Action: lambda:InvokeFunction
+      Principal: events.amazonaws.com
+      SourceArn: !GetAtt 'ScheduledRule.Arn'
+  LambdaExecutionRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+        - Effect: Allow
+          Principal:
+            Service:
+            - lambda.amazonaws.com
+          Action:
+          - sts:AssumeRole
+      Path: /
+      Policies:
+      - PolicyName: root
+        PolicyDocument:
+          Version: '2012-10-17'
+          Statement:
+          - Effect: Allow
+            Action:
+            - logs:CreateLogGroup
+            - logs:CreateLogStream
+            - logs:PutLogEvents
+            Resource: '*'
+  LambdaFunction:
+    Type: AWS::Lambda::Function
+    Properties:
+      Role: !GetAtt LambdaExecutionRole.Arn
+      PackageType: Image
+      Code:
+        ImageUri: !Ref 'EcrImageUri'
+      Architectures:
+        - x86_64
+      MemorySize: 2048
+      Timeout: 300
+      Description: 'Scheduled Lambda Sample (python3 urlopen)'
+      Tags:
+      - Key: Name
+        Value: 'ScheduledLambdaSample'
+      - Key: CloudformationArn
+        Value: !Ref 'AWS::StackId'
