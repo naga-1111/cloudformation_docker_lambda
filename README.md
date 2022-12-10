@@ -3,7 +3,7 @@
 ## 概要
 DockerイメージをAmazon ECRにプッシュ、イメージからLambda関数作成して、5分おきに実行するイベントを作成するPowershellスクリプトとcloudformationテンプレートのサンプル
 
-## 環境の前提条件
+## 環境
 * Docker for Windows
 * AWS CLI https://docs.aws.amazon.com/ja_jp/cli/latest/userguide/getting-started-install.html
 * `C:/Users/ユーザ名/.aws/`に、`credentialsサンプル`をコピーしてシークレット等記入して`credentials`という名前で保存
