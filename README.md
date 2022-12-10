@@ -16,3 +16,4 @@ DockerイメージをAmazon ECRにプッシュ、イメージからLambda関数�
 * `deploy_tools.ps1`を書き替える
     * `$ProjectName`、`$Region_name`を好きに変える
     * `$AWSprofile`の値を、`crerdentials`の`[]`の値と同じにする
+* `deploy_tools.ps1`を実行すればあとは自動でAWSリソースがデプロイされる
